@@ -11,8 +11,8 @@ class Lookup(BaseModel):
     industryLink: Optional[str] = None
     industryName: Optional[str] = None
     quoteType: Optional[str] = None
-    rank: int
+    rank: float
     regularMarketChange: float
     regularMarketPercentChange: float
     regularMarketPrice: float
-    shortName: str
+    shortName: Optional[str] = None
