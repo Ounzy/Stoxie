@@ -1,4 +1,5 @@
 from PyQt6.QtWidgets import QListWidget, QWidget, QVBoxLayout
+import yfinance as yf
 
 class DetailPage(QWidget):
     def __init__(self, parent = None):
@@ -10,7 +11,15 @@ class DetailPage(QWidget):
 
         self.setLayout(self.pageLayout)
     
-    ticker = str
+    tickerArg = str
     def setData(self, t):
-        ticker = t
         self.List.addItem(t)
+        self.getTicker(t)
+        
+        
+
+    def getTicker(self, t):
+        ticker = yf.Ticker(t)
+        tickerInfo = ticker.info
+        print(ticker.history(period='1mo'))
+        #print(tickerInfo)
