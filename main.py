@@ -29,13 +29,12 @@ class MainWindow(QMainWindow):
 
         self.searchPage.screener.itemClicked.connect(self.onTickerSelected)
 
-    def onTickerSelected(self, item):
+    def onTickerSelected(self, item):               #when searchpage qlistwidget asset selected
         ticker = item.text().split(" ")[0]
         self.detailPage.setData(ticker)
         self.stackedWidget.setCurrentIndex(1)
 
 
-    # In deiner main.py (MainWindow)
 
 def toggle_theme(self):
     if Theme.current_mode == "dark":

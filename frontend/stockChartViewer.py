@@ -1,23 +1,47 @@
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
-import mplcursors  # Import für die Interaktivität
+
 
 class ChartCanvas(FigureCanvas):
-    def __init__(self):
-        # Initialisierung der Figur
+
+    def __init__(self, parent=None): # Hier 'parent' hinzufügen
         self.fig, self.ax = plt.subplots(tight_layout=True)
         super().__init__(self.fig)
+        self.setParent(parent) # Setzt das Widget in den Container
+
 
     def plot_stock(self, df):
         self.ax.clear()
         
-        # 1. Die Linie zeichnen und in einer Variable 'line' speichern
-        line, = self.ax.plot(df.index, df['Close'], color='#0078D4', linewidth=2)
+        if hasattr(self, 'interactive_cursor') and self.interactive_cursor is not None:
+            try:
+                self.interactive_cursor.remove()
+            except Exception:
+                pass # Falls das Entfernen fehlschlägt, machen wir trotzdem weiter
+            self.interactive_cursor = None
+
+        if len(df) < 10:
+        # Zeichnet vertikale Linien von Low zu High für jeden Zeitpunkt (Index)
+        # vlines(x, ymin, ymax)
+            self.ax.vlines(df.index, df['Low'], df['High'], 
+                       color='#0078D4', linewidth=2, label='High-Low Range')
+            
+            self.ax.vlines(df.index, df['Open'], df['Close'],
+                        color='black', linewidth=10, label='Open and Close')
+        
+        # Optional: Einen kleinen Punkt für den Close-Preis auf der Linie setzen
+        #    self.ax.scatter(df.index, df['Close'], color='white', s=20, zorder=3, label='Close')
+        
+            self.ax.legend(facecolor='#1E1E1E', labelcolor='white', edgecolor='none')
+        else:
+            # Standard-Linienchart für mehr als 10 Punkte
+            self.ax.plot(df.index, df['Close'], color='#0078D4', linewidth=2)
         
         # 2. Interaktiven Cursor hinzufügen
-        cursor = mplcursors.cursor(line, hover=True) # hover=True zeigt es beim Drüberfahren
+        import mplcursors
+        self.interactive_cursor = mplcursors.cursor(self.ax.get_lines() + list(self.ax.collections), hover=True) # hover=True zeigt es beim Drüberfahren
         
-        @cursor.connect("add")
+        @self.interactive_cursor.connect("add")
         def _(sel):
             # sel.target[0] ist die X-Achse (Datum), sel.target[1] ist die Y-Achse (Preis)
             # Wir formatieren den Preis auf 2 Nachkommastellen

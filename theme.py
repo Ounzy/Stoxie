@@ -45,4 +45,42 @@ class Theme:
                 padding: 8px;
                 color: white;
             }}
-        """
+
+            QComboBox {{
+                background-color: rgba(40, 40, 40, 230); 
+                border: 1px solid #444444;
+                border-radius: 8px; 
+                padding: 4px 12px;
+                color: #E0E0E0;
+                font-size: 13px;
+                font-weight: 500;
+            }}
+
+            QComboBox:hover {{
+                border: 1px solid #0078D4; /* Dein Blau-Ton */
+                background-color: rgba(50, 50, 50, 250);
+            }}
+
+            QComboBox::drop-down {{
+                subcontrol-origin: padding;
+                subcontrol-position: top right;
+                width: 25px;
+                border-left: 0px; 
+            }}
+
+            QComboBox QAbstractItemView {{
+                background-color: #1e1e1e;
+                border: 1px solid #444444;
+                border-radius: 8px;
+                selection-background-color: #0078D4; /* Blau beim Auswählen */
+                color: white;
+                outline: none;
+                padding: 5px;
+            }}
+
+            QComboBox QAbstractItemView::item {{
+                min-height: 30px;
+                padding-left: 10px;
+            }}
+                    """
+                
