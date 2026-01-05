@@ -1,6 +1,7 @@
 from typing import Optional, List, Any
 from pydantic import ConfigDict
-
+from pydantic import BaseModel, Field, ConfigDict, AliasGenerator
+from pydantic.alias_generators import to_camel
 
 """ class CompanyOfficer:
         model_config = ConfigDict(extra='ignore')
@@ -18,17 +19,17 @@ from pydantic import ConfigDict
   
 
 
-class TickerInfo:
+class TickerInfo(BaseModel):
     model_config = ConfigDict(extra='ignore')
     
-    address1: str
-    city: str
-    country: str
-    website: str
-    industry: str
-    sector: str
-    long_business_summary: str
-    full_time_employees: int
+    address1: Optional[str] = None
+    city: Optional[str] = None
+    country: Optional[str] = None
+    website: Optional[str] = None
+    industry: Optional[str] = None
+    sector: Optional[str] = None
+    longBusinessSummary: Optional[str] = None
+    fullTimeEmployees: Optional[int] = None
     """  company_officers: List[CompanyOfficer]
     executive_team: List[Any]
     price_hint: int
@@ -49,19 +50,19 @@ class TickerInfo:
     average_volume: int
     average_volume10_days: int
     average_daily_volume10_day: int"""
-    market_cap: int
-    all_time_high: float
-    all_time_low: float
-    trailing_annual_dividend_rate: float
-    trailing_annual_dividend_yield: float
-    currency: str
-    tradeable: str
-    enterprise_value: int
-    profit_margins: float
-    float_shares: int
-    shares_outstanding: int
-    book_value: float
-    price_to_book: float
+    marketCap: Optional[int] = None
+    allTimeHigh: Optional[float] = None
+    allTimeLow: Optional[float] = None
+    trailingAnnualDividendRate: Optional[float] = None
+    trailingAnnualDividendYield: Optional[float] = None
+    currency: Optional[str] = None
+    tradeable: bool
+    enterpriseValue: Optional[int] = None
+    profitMargins: Optional[float] = None
+    floatShares: Optional[int] = None
+    sharesOutstanding: Optional[int] = None
+    bookValue: Optional[float] = None
+    priceToBook: Optional[float] = None
     """last_fiscal_year_end: int
     next_fiscal_year_end: int
     most_recent_quarter: int
@@ -75,15 +76,15 @@ class TickerInfo:
     last_dividend_value: float
     last_dividend_date: int
     quote_type: str"""
-    current_price: float
-    total_cash: int
-    total_cash_per_share: float
-    total_debt: int
-    total_revenue: int
-    revenue_per_share: float
-    return_on_assets: float
-    return_on_equity: float
-    gross_profits: int
+    current_price: Optional[float] = None
+    totalCash: Optional[int] = None
+    totalCashPerShare: Optional[float] = None
+    totalDebt: Optional[int] = None
+    totalRevenue: Optional[int] = None
+    revenuePerShare: Optional[float] = None
+    returnOnAssets: Optional[float] = None
+    returnOnEquity: Optional[float] = None
+    grossProfits: Optional[int] = None
     """earnings_growth: float
     revenue_growth: float
     gross_margins: float
@@ -91,8 +92,8 @@ class TickerInfo:
     operating_margins: float
     financial_currency: str
     symbol: str"""
-    language: str
-    region: str
+    language: Optional[str] = None
+    region: Optional[str] = None
     """type_disp: str
     custom_price_alert_confidence: str
     market_state: str
@@ -101,16 +102,16 @@ class TickerInfo:
     regular_market_change: float
     regular_market_day_range: str
     full_exchange_name: str
-    average_daily_volume3_month: int
-    short_name: str
-    long_name: str
-    corporate_actions: List[Any]
+    average_daily_volume3_month: int"""
+    shortName: Optional[str] = None
+    longName: Optional[str] = None
+    """corporate_actions: List[Any]
     regular_market_time: int
     exchange: str
     message_board_id: str
     exchange_timezone_name: str
     exchange_timezone_short_name: str"""
-    market: str
+    market: Optional[str] = None
     """source_interval: int
     exchange_data_delayed_by: int
     crypto_tradeable: str
@@ -119,6 +120,7 @@ class TickerInfo:
     trailing_peg_ratio: float"""
 
    
+TickerInfo.model_rebuild()
 
 
 
@@ -126,8 +128,7 @@ class TickerInfo:
 
 
 
-
-   """
+"""
 {
   "address1": "25 Gresham Street",
   "city": "London",

@@ -5,8 +5,11 @@ from backend.yfinance.markets.markets_objects import *
 from backend.yfinance.lookup.lookup import *
 from frontend.searchPage.searchPage import *
 from frontend.detailpage.detailpage import *
+from theme import *
 import sys
-        
+
+
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -31,12 +34,40 @@ class MainWindow(QMainWindow):
         self.detailPage.setData(ticker)
         self.stackedWidget.setCurrentIndex(1)
 
-app = QApplication(sys.argv)
 
-window = MainWindow()
-window.show()
+    # In deiner main.py (MainWindow)
 
-app.exec() 
+def toggle_theme(self):
+    if Theme.current_mode == "dark":
+        Theme.current_mode = "light"
+    else:
+        Theme.current_mode = "dark"
+    
+    from PyQt6.QtWidgets import QApplication
+    QApplication.instance().setStyleSheet(Theme.get_stylesheet())
+    
+    print(f"Modus gewechselt zu: {Theme.current_mode}")
+
+
+
+#window = MainWindow()
+#window.show()
+
+#app.exec() 
 
 #getMarketEurope()
 #lookup()
+
+def main():
+    app = QApplication(sys.argv)
+    
+    # Hier wenden wir den Style global an
+    app.setStyleSheet(Theme.get_stylesheet())
+    
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
+
+if __name__ == "__main__":
+    main()
+
