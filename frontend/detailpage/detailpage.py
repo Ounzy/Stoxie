@@ -85,6 +85,7 @@ class DetailPage(QWidget):
         self.ticker = yf.Ticker(t)                           #   whole ticker
         self.getTickerInfo(self.ticker)
         self.update_stock_data(self.ticker, '3mo')
+        self.choseHistoryPeriod.setCurrentIndex(3)
         #print(tickerInfo)
 
     tickerInfo = {}
